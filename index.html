@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chase Mulder · Projects</title>
+  <meta name="description" content="Projects and experiments by Chase Mulder.">
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --border: #262b36;
+      --text: #e6e8ec;
+      --muted: #9aa3b2;
+      --accent: #f5a524;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f7f5;
+        --panel: #ffffff;
+        --border: #e3e3df;
+        --text: #16181d;
+        --muted: #5d6573;
+        --accent: #c97a00;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    main { max-width: 960px; margin: 0 auto; padding: 72px 24px 48px; }
+    header { margin-bottom: 48px; }
+    .eyebrow {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    h1 { font-size: clamp(32px, 6vw, 48px); margin: 8px 0 12px; letter-spacing: -0.02em; }
+    header p { color: var(--muted); max-width: 560px; margin: 0; font-size: 17px; }
+    .links { margin-top: 20px; display: flex; gap: 16px; }
+    .links a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+    .links a:hover { border-color: var(--accent); }
+
+    h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .card {
+      display: block;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: 12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+    }
+    .empty { border-style: dashed; color: var(--muted); }
+    footer { margin-top: 64px; font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">chase-mulder.github.io</div>
+      <h1>Chase Mulder</h1>
+      <p>Software engineer working on warehouse automation. This is where I put side projects, tools and experiments.</p>
+      <div class="links">
+        <a href="https://github.com/Chase-Mulder">GitHub</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="grid" id="projects"></div>
+    </section>
+
+    <footer>© <span id="year"></span> Chase Mulder</footer>
+  </main>
+
+  <script>
+    // To add a project: put its files in a folder (e.g. /my-project/index.html)
+    // and add an entry below. "link" is the folder name followed by a slash.
+    const projects = [
+      // { title: "My Project", description: "What it does in one line.", link: "my-project/", tags: ["JavaScript"] },
+    ];
+
+    const grid = document.getElementById("projects");
+    if (projects.length === 0) {
+      grid.innerHTML = '<div class="card empty"><h3>Coming soon</h3><p>The first project is on its way.</p></div>';
+    } else {
+      for (const p of projects) {
+        const a = document.createElement("a");
+        a.className = "card";
+        a.href = p.link;
+        a.innerHTML = `<h3></h3><p></p><div class="tags"></div>`;
+        a.querySelector("h3").textContent = p.title;
+        a.querySelector("p").textContent = p.description;
+        const tags = a.querySelector(".tags");
+        for (const t of p.tags || []) {
+          const s = document.createElement("span");
+          s.className = "tag";
+          s.textContent = t;
+          tags.appendChild(s);
+        }
+        grid.appendChild(a);
+      }
+    }
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
